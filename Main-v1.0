@@ -1,3 +1,115 @@
+import os, time, math
+os.system("clear")
+remaining_stock_len = None
+cut_lens = []
+cut_qtys_needed = []
+all_possible_cuts = []
+cuts_needed = {}
+cuts_made = []
+
+def set_cuts_needed():
+    remaining_stock_len = int(input("What is the length of the stock (in inches)? "))
+    num_of_cut_lengths = int(input("How many cut lengths are there? "))
+    i = 1
+    while i <= num_of_cut_lengths:
+        tolerance = 0.125
+        length = float(input("What is the length of cut " + str(i) + " (in inches)? "))
+        qty = int(input("How many " + str(length) + " in. cuts are needed? "))
+        cut_lens.append(length + tolerance)
+        cut_qtys_needed.append(qty)
+        i += 1
+    cut_lens.append("R")
+    j = 0
+    while j < len(cut_qtys_needed):
+        cuts_needed[cut_lens[j]] = cut_qtys_needed[j]
+        j += 1
+    return(remaining_stock_len)
+        
+def set_all_possible_cuts():
+    previous_cut_qtys = get_first_cut(remaining_stock_len)
+    another_cut_needed = get_another_cut_needed(previous_cut_qtys)
+    while another_cut_needed:
+        get_next_cut(previous_cut_qtys)
+        another_cut_needed = get_another_cut_needed(previous_cut_qtys)
+
+def get_first_cut(remaining_stock_len):
+    cut_qtys = []
+    k = 0
+    while k < len(cut_lens):
+        if k == len(cut_lens) - 1:
+            cut_qtys.append(remaining_stock_len)
+        else:
+            qty = int(remaining_stock_len // cut_lens[k])
+            cut_qtys.append(qty)
+            remaining_stock_len -= cut_lens[k] * qty
+        k += 1
+    append_cut_to_array(cut_qtys)
+    return(cut_qtys)
+    
+def get_another_cut_needed(previous_cut_qtys):
+    m = 0
+    while m < len(previous_cut_qtys) - 1:
+        if previous_cut_qtys[m] > 0:
+            return(True)
+        m += 1
+    return(False)
+
+def get_next_cut(current_cut_qtys):
+    cut_qtys, p = lower_the_smallest_digit_possible(current_cut_qtys)
+    cut_qtys = increase_remaining_stock_len(cut_qtys, p)
+    cut_qtys = use_remaining_stock_len(cut_qtys, p+1)
+    append_cut_to_array(cut_qtys)
+    
+def append_cut_to_array(cut_qtys):
+    n = 0
+    possible_cut_option = {}
+    while n < len(cut_qtys):
+        possible_cut_option[cut_lens[n]] = cut_qtys[n]
+        n += 1
+    all_possible_cuts.append(possible_cut_option)
+    
+def get_best_cut(cuts_needed, all_possible_cuts):
+    best_cut_index = get_best_cut_index(cuts_needed, all_possible_cuts)
+    best_cut = all_possible_cuts[best_cut_index]
+    return(best_cut)
+    
+def get_best_cut_index(cuts_needed, all_possible_cuts):
+    n = 0
+    cut_is_needed = True
+    smallest_R_index = None
+    smallest_R = remaining_stock_len
+    while n < len(all_possible_cuts):
+        cut_is_needed = get_cut_is_needed(cuts_needed, all_possible_cuts[n])
+        if cut_is_needed:
+            if all_possible_cuts[n]["R"] == 0:
+                return n
+            elif all_possible_cuts[n]["R"] < smallest_R:
+                smallest_R = all_possible_cuts[n]["R"]
+                smallest_R_index = n
+        n += 1
+    return(smallest_R_index)
+
+def lower_the_smallest_digit_possible(current_cut_qtys):
+    p = len(current_cut_qtys) - 2
+    while p >= 0:
+        if current_cut_qtys[p] > 0:
+            current_cut_qtys[p] -= 1
+            break
+        p -= 1
+    return(current_cut_qtys, p)
+
+def increase_remaining_stock_len(cut_qtys, p):
+    cut_qtys[-1] += cut_lens[p]
+    return(cut_qtys)
+
+def use_remaining_stock_len(cut_qtys, p):
+    if cut_qtys[-1] > 0:
+        while p < len(cut_qtys) - 1:
+            if cut_qtys[-1] > cut_qtys[p]:
+                qty = int(cut_qtys[-1] // cut_lens[p])
+                cut_qtys[p] += qty
+                cut_qtys[-1] -= cut_lens[p] * qty
+                cut_qtys[-1] = round(cut_qtys[-1], 3)
             p += 1
     return(cut_qtys) 
 
@@ -66,7 +178,7 @@ def print_summary(cuts_made):
     cutting_style_qtys = [int(value) for value in cutting_styles.values()]
     t = 0
     bar_number = 1
-    while t < len(cutting_style_lengths):k
+    while t < len(cutting_style_lengths):
         if cutting_style_qtys[t] > 1:
             print("Bars " + str(bar_number) + " - " + str(cutting_style_qtys[t] + bar_number - 1) + ":  " + str(cutting_style_lengths[t]))
         else:
