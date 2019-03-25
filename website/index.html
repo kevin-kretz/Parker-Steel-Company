@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Parker Steel Program</title>
+    <link rel="stylesheet" href="./main.css">
+    <script src="./order.js"></script>
+</head>
+<body>
+    <h1>Parker Steel Company</h1>
+    <h2>New Order</h2>
+    <form id="basic-info">
+        <label for="stock-length">Stock Length:</label>
+        <input autofocus="true" id="stock-length" name="stock-length" required="true" type="number">
+        <label for="number-of-lines">Number of purchase lines:</label>
+        <input id="number-of-lines" name="number-of-lines" required="true" type="number">
+        <button name="continue" onclick="createPurchaseLinesForm()" type="button">Continue</button>
+    </form>
+    <form id="purchase-lines">
+    </form>
+</body>
+</html>
