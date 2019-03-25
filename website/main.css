@@ -1,0 +1,7 @@
+button, label {
+    display: block;
+}
+
+#purchase-lines {
+    display: none;
+}
