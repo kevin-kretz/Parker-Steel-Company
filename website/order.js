@@ -1,31 +1,69 @@
-function createPurchaseLinesForm() {
-  document.getElementById("basic-info").style.display = "none";
-  document.getElementById("purchase-lines").style.display = "block";
+function getBestSolution() {
+    let stockLength = document.getElementById("stock-length").value;
+    let numberOfPurchaseLines = document.getElementById("number-of-lines").value;
 
-  let stockLength = document.getElementById("stock-length").value;
-  let numberOfPurchaseLines = document.getElementById("number-of-lines").value;
+    
+};
 
-  let form = document.getElementById('purchase-lines');
+function showNextForm() {
+    let numberOfPurchaseLines = document.getElementById("number-of-lines").value;
 
-  for (let i = 0; i < numberOfPurchaseLines; i++) {
+    createPurchaseLinesForm(numberOfPurchaseLines);
+
+    document.getElementById("basic-info").style.display = "none";
+    document.getElementById("purchase-lines").style.display = "block";
+
+  
+};
+
+function createHeader(i) {
+    let header = document.createElement('h3');
+    let headerText = document.createTextNode(`Line ${i}:`);
+    header.appendChild(headerText);
+
+    return header
+};
+
+function createLabel(text) {
     let label = document.createElement('label');
-    let labelText = document.createTextNode(`Line ${i+1}:`);
+    let labelText = document.createTextNode(`${text}: `);
     label.appendChild(labelText);
 
-    let inputBox = document.createElement('input');
-    
-    form.append(label);
-    form.append(inputBox);
-  }
-
-  let button = document.createElement('button');
-  let buttonText = document.createTextNode('Previous');
-  button.appendChild(buttonText);
-  form.append(button);
-
-  button = document.createElement('button');
-  button.setAttribute('onclick', 'getBestCombination()');
-  buttonText = document.createTextNode('Calculate');
-  button.appendChild(buttonText);
-  form.append(button);
+    return label;
 };
+
+function createInput(idText) {
+    let inputBox = document.createElement('input');
+    inputBox.setAttribute('id', idText);
+    inputBox.setAttribute('required', 'true');
+    inputBox.setAttribute('type', 'number');
+
+    return inputBox;
+};
+
+function createPurchaseLinesForm(numberOfPurchaseLines) {
+    let form = document.getElementById('purchase-lines');
+
+    for (let i = numberOfPurchaseLines; i > 0; i--) {
+        let div = createPurchaseLineDiv(i);
+        form.prepend(div)
+    }
+}
+
+function createPurchaseLineDiv(i){
+    let div = document.createElement('div')
+
+    let header = createHeader(i);
+    let lengthLabel = createLabel('Length');
+    let lengthInput = createInput(`line-${i}-length`);
+    let quantityLabel = createLabel('Quantity');
+    let quantityInput = createInput(`line-${i}-quantity`);
+
+    div.appendChild(header);
+    div.appendChild(lengthLabel);
+    div.appendChild(lengthInput);
+    div.appendChild(quantityLabel);
+    div.appendChild(quantityInput);
+
+    return div;
+}
