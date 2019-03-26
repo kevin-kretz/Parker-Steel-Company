@@ -16,9 +16,11 @@
         <input autofocus="true" id="stock-length" name="stock-length" required="true" type="number">
         <label for="number-of-lines">Number of purchase lines:</label>
         <input id="number-of-lines" name="number-of-lines" required="true" type="number">
-        <button name="continue" onclick="createPurchaseLinesForm()" type="button">Continue</button>
+        <button name="continue" onclick="showNextForm()" type="button">Continue</button>
     </form>
     <form id="purchase-lines">
+        <button onclick="showPreviousForm()" type="button">Previous</button>
+        <button name="continue" onclick="getBestSolution()" type="button">Continue</button>
     </form>
 </body>
 </html>
