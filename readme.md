@@ -4,8 +4,8 @@ One of my friends, who works at Parker Steel, approached me with an issue he was
 
 ## Example
 Parker Steel uses stock approximately 12 feet long.  Sometimes they use longer stock, such as 20 feet, but for the most part it is 12 feet.  They take this metal and cut it down to a customers ordered length and quantity.  For this pretend order, we are going to pretend the customer has two lines on their order:
-    1. 15 pieces of 19 inch lengths
-    2. 30 pieces of 16 inch lengths
+1. 15 pieces of 19 inch lengths
+1. 30 pieces of 16 inch lengths
 
 Typically, the cutting engineers will spend about 30 minutes - 1 hour trying to find an optimal way to cut the metal; however, they often end up just cutting the metal in order, especially if they have several orders come in.
     
