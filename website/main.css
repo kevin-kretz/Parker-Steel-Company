@@ -1,7 +1,17 @@
-button, label {
-    display: block;
-}
-
 #purchase-lines {
     display: none;
+}
+
+#order-info {
+    display: block;
+    width: 90vw;
+    margin-top: 1rem;
+}
+
+fieldset {
+    margin: 1rem;
+}
+
+body {
+    background-color: white;
 }
