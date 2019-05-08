@@ -1,69 +1,104 @@
-function getBestSolution() {
-    let stockLength = document.getElementById("stock-length").value;
-    let numberOfPurchaseLines = document.getElementById("number-of-lines").value;
-
-    
-};
-
-function showNextForm() {
-    let numberOfPurchaseLines = document.getElementById("number-of-lines").value;
-
-    createPurchaseLinesForm(numberOfPurchaseLines);
-
-    document.getElementById("basic-info").style.display = "none";
-    document.getElementById("purchase-lines").style.display = "block";
-
-  
-};
-
-function createHeader(i) {
-    let header = document.createElement('h3');
-    let headerText = document.createTextNode(`Line ${i}:`);
-    header.appendChild(headerText);
-
-    return header
-};
-
-function createLabel(text) {
-    let label = document.createElement('label');
-    let labelText = document.createTextNode(`${text}: `);
-    label.appendChild(labelText);
-
-    return label;
-};
-
-function createInput(idText) {
-    let inputBox = document.createElement('input');
-    inputBox.setAttribute('id', idText);
-    inputBox.setAttribute('required', 'true');
-    inputBox.setAttribute('type', 'number');
-
-    return inputBox;
-};
-
-function createPurchaseLinesForm(numberOfPurchaseLines) {
-    let form = document.getElementById('purchase-lines');
-
-    for (let i = numberOfPurchaseLines; i > 0; i--) {
-        let div = createPurchaseLineDiv(i);
-        form.prepend(div)
+class Piece {
+    constructor(length, quantity) {
+        this.length = length;
+        this.quantity = quantity;
     }
 }
 
-function createPurchaseLineDiv(i){
-    let div = document.createElement('div')
-
-    let header = createHeader(i);
-    let lengthLabel = createLabel('Length');
-    let lengthInput = createInput(`line-${i}-length`);
-    let quantityLabel = createLabel('Quantity');
-    let quantityInput = createInput(`line-${i}-quantity`);
-
-    div.appendChild(header);
-    div.appendChild(lengthLabel);
-    div.appendChild(lengthInput);
-    div.appendChild(quantityLabel);
-    div.appendChild(quantityInput);
-
-    return div;
+class Pattern {
+    constructor(pattern, remainingLength) {
+        this.pattern = pattern;
+        this.remainingLength = remainingLength;
+    }
 }
+
+let stockLength;
+const piecesOrdered = [];
+const allPossiblePatterns = [];
+
+function getBestCuttingSequence() {
+    stockLength = parseFloat(document.getElementById("stock-length").value);
+    getPiecesOrdred();
+    getAllPossiblePatterns();
+}
+
+function getPiecesOrdred() {
+    const numPurchaseLines = document.getElementsByTagName("fieldset").length;
+
+    for (let purchaseLine = 1; purchaseLine <= numPurchaseLines; purchaseLine++) {
+        let length = parseFloat(document.getElementById(`line-${purchaseLine}-length`).value);
+        let quantity = parseFloat(document.getElementById(`line-${purchaseLine}-quantity`).value);
+        piecesOrdered.push(new Piece(length, quantity));
+    }
+}
+
+function getAllPossiblePatterns() {
+    let previousPattern;
+    let pattern = getFirstPattern();
+    allPossiblePatterns.push(pattern);
+    while (anotherPatternPossible(pattern.pattern)) {
+        previousPattern = pattern;
+        pattern = getNextPattern(previousPattern);
+        allPossiblePatterns.push(pattern);
+    }
+}
+
+function getFirstPattern() {
+    let pattern = [];
+    let remainingLength = stockLength;
+
+    for (let piece in piecesOrdered) {
+        let quantityNeeded = piecesOrdered[piece].quantity;
+        let maxQuantityPossible = Math.floor(remainingLength / piecesOrdered[piece].length);
+        let quantity = Math.min(quantityNeeded, maxQuantityPossible);
+        remainingLength -= quantity * piecesOrdered[piece].length;
+        pattern.push(new Piece(piecesOrdered[piece].length, quantity));
+    }
+    
+    return new Pattern(pattern, remainingLength);
+}
+
+function anotherPatternPossible(previousPattern) {
+    for (let piece in previousPattern) {
+        if (previousPattern[piece].quantity > 0) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function getNextPattern(previousPattern) {
+    const startIndexAndLoweredPattern = lowerSmallestLength(previousPattern);
+    const nextPattern = useRemainingLength(startIndexAndLoweredPattern);
+    return nextPattern;
+}
+
+function lowerSmallestLength(pattern) {
+    let startIndex;
+    let loweredPattern = pattern;
+    for (let i = loweredPattern.pattern.length -1; i >= 0; i--) {
+        if (loweredPattern.pattern[i].quantity > 0) {
+            loweredPattern.pattern[i].quantity -= 1;
+            loweredPattern.remainingLength += loweredPattern.pattern[i].length;
+            startIndex = i + 1;
+            break;
+        }
+    }
+    
+    return [startIndex, loweredPattern]
+}
+
+function useRemainingLength(startIndexAndLoweredPattern) {
+    const startIndex = startIndexAndLoweredPattern[0];
+    let loweredPattern = startIndexAndLoweredPattern[1];
+
+    for (let i = startIndex; i < loweredPattern.pattern.length; i++) {
+        while (loweredPattern.pattern[i].length <= loweredPattern.remainingLength && loweredPattern.pattern[i].quantity < piecesOrdered[i].quantity) {
+            loweredPattern.pattern[i].quantity += 1;
+            loweredPattern.remainingLength -= loweredPattern.pattern[i].length;
+        }
+    }
+    return loweredPattern
+}
+
+function printSummary() {}
