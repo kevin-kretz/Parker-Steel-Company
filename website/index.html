@@ -6,21 +6,31 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Parker Steel Program</title>
     <link rel="stylesheet" href="./main.css">
+    <script src="./form.js"></script>
     <script src="./order.js"></script>
 </head>
 <body>
     <h1>Parker Steel Company</h1>
     <h2>New Order</h2>
-    <form id="basic-info">
+    <form id="order-info">
         <label for="stock-length">Stock Length:</label>
         <input autofocus="true" id="stock-length" name="stock-length" required="true" type="number">
-        <label for="number-of-lines">Number of purchase lines:</label>
-        <input id="number-of-lines" name="number-of-lines" required="true" type="number">
-        <button name="continue" onclick="showNextForm()" type="button">Continue</button>
-    </form>
-    <form id="purchase-lines">
-        <button onclick="showPreviousForm()" type="button">Previous</button>
-        <button name="continue" onclick="getBestSolution()" type="button">Continue</button>
+        <fieldset id="line1" name="line-1">
+            <label for="line-1-length">Length: </label>
+            <input id="line-1-length" name="line-1-length" required="true" type="number">
+            <label for="line-1-quantity">Quantity: </label>
+            <input id="line-1-quantity" name="line-1-quantity" required="true" type="number">
+            <button onclick="removePurchaseLine('line1')" type="button" tabindex="-1">Remove</button>
+        </fieldset>
+        <fieldset id="line2" name="line-2">
+            <label for="line-2-length">Length: </label>
+            <input id="line-2-length" name="line-2-length" required="true" type="number">
+            <label for="line-2-quantity">Quantity: </label>
+            <input id="line-2-quantity" name="line-2-quantity" required="true" type="number">
+            <button onclick="removePurchaseLine('line1')" type="button" tabindex="-1">Remove</button>
+        </fieldset>
+        <button id="add-purchase-line" name="add-purchase-line" onclick="addPurchaseLine()" type="button">Add Purchase Line</button>
+        <button onclick="getBestCuttingSequence(); printSummary()" type="button">Calculate</button>
     </form>
 </body>
 </html>
