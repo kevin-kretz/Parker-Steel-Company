@@ -135,7 +135,7 @@ def get_needs_another_cut(cuts_needed):
     all_qtys_equal_zero = all(qty == 0 for qty in cuts_needed.values())
     return (not all_qtys_equal_zero)    
     
-def make_cut(cuts_needed, best_cut):#
+def make_cut(cuts_needed, best_cut):
     new_cuts_needed = update_cuts_needed(cuts_needed, best_cut)
     cuts_made.append(best_cut)
     return new_cuts_needed    
