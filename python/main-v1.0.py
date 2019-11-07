@@ -8,6 +8,7 @@ cuts_needed = {}
 cuts_made = []
 
 def set_cuts_needed():
+    """Asks the user what the stock length will be, the number of cuts needed as well the length and quantities of these cuts."""
     remaining_stock_len = int(input("What is the length of the stock (in inches)? "))
     num_of_cut_lengths = int(input("How many cut lengths are there? "))
     i = 1
@@ -26,6 +27,7 @@ def set_cuts_needed():
     return(remaining_stock_len)
         
 def set_all_possible_cuts():
+    """Adds all the possible cutting patterns to the list all_possible_cuts""""
     previous_cut_qtys = get_first_cut(remaining_stock_len)
     another_cut_needed = get_another_cut_needed(previous_cut_qtys)
     while another_cut_needed:
