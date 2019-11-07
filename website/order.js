@@ -1,5 +1,8 @@
 class Piece {
     constructor(length, quantity) {
+        /** @param {number} length Length of the piece
+         *  @param {number} quantity Quanity of pieces
+        **/
         this.length = length;
         this.quantity = quantity;
     }
