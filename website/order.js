@@ -1,8 +1,5 @@
 class Piece {
-    constructor(length, quantity) {
-        /** @param {number} length Length of the piece
-         *  @param {number} quantity Quanity of pieces
-        **/
+    constructor(length: number, quantity: number) {
         this.length = length;
         this.quantity = quantity;
     }
