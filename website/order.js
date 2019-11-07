@@ -1,4 +1,4 @@
-class Piece {
+let Piece = class Piece {
     constructor(length, quantity) {
         this.length = length;
         this.quantity = quantity;
