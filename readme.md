@@ -1,6 +1,6 @@
 # Introduction
 ## Problem Scenario
-One of my friends, who works at Parker Steel, approached me with an issue he was having at work.  He knew I was into programming and asked if there was any way to write a program to do what he was asking.  In short, he wanted a program that would help him determine the best cutting order for pieces in order to have one large remaining piece at the end, rather than several shorter pieces.  For a more detailed explination, view the Wikipedia page on <a href="https://en.wikipedia.org/wiki/Cutting_stock_problem">The Cutting Stock Problem</a>.
+One of my friends, who worked at Parker Steel, approached me with an issue he was having at work.  He knew I was into programming and asked if there was any way to write a program to do what he was asking.  In short, he wanted a program that would help him determine the best cutting order for pieces in order to have one large remaining piece at the end, rather than several shorter pieces.  For a more detailed explination, view the Wikipedia page on <a href="https://en.wikipedia.org/wiki/Cutting_stock_problem">The Cutting Stock Problem</a>.
 
 ## Example
 Parker Steel uses stock approximately 12 feet long.  Sometimes they use longer stock, such as 20 feet, but for the most part it is 12 feet.  They take this metal and cut it down to a customers ordered length and quantity.  For this pretend order, we are going to pretend the customer has two lines on their order:
