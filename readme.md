@@ -173,8 +173,8 @@ Typically, the cutting engineers will spend about 30 minutes - 1 hour trying to 
     </tr>
 </table>
 
-If you would like, here is a link to all the possible combinations of pieces you can cut from on 12' bar:
-<a href="https://docs.google.com/spreadsheets/d/1IK04p6xg_xAWejvg_z6wSyJp6e6cCbD35AotJlRn0PQ/edit?usp=sharing">Google Doc Link</a>
+If you would like, <a href="https://github.com/kevin-kretz/Parker-Steel-Company/blob/master/docs/all_possible_cutting_patterns.md">here</a> is a link to all the possible combinations of pieces you can cut from on 12' bar.
+
 
 ### Results
 The key in this peoject are the remaining pieces.  You want to have as few remaining pieces as possible, make the remaining pieces as small as possible, and end up with one piece that is as long as possible.  You'll notice the optomized solution has a remaining length of 96 inches.  This gives them almost 3 feet more of usable metal for future orders.  This is just a simple example.  Typically orders may have several different cutting lengths all with different quantities.  They also usually aren't nice round cutting lengths either.  Most of the time they are random lengths such as 45.125 inches, 19.375 inch, 32.2 inches and 27.122 inches.  You can see how this can get quite complicated, especially if you add in larger quantites of 50 or 100 pieces per line.
