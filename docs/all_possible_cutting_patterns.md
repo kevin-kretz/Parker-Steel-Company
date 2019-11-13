@@ -1,3 +1,7 @@
+# All Possible Cutting Patterns
+
+These are all the possible cutting patterns for the given example in the readme file.
+
 <table>
     <tr>
         <th>19 in.</th>
