@@ -2,7 +2,6 @@ class Piece {
     
     /** 
      * A piece is a piece to be cut from stock material.  Each Piece has its own length and quatity required for the order.
-     * @constructor 
      * @param {number} length - The length of the piece required
      * @param {number} quantity - The number of pieces required for the order.
     */
@@ -50,8 +49,7 @@ function getAllPossiblePatterns() {
 }
 
 /**
- * @function getFirstPattern
- * @desc Gets the first pattern when getting all possible patterns
+ * Gets the first pattern when getting all possible patterns
  * @returns {Piece[]} list of Pieces
  */
 
