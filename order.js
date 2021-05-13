@@ -1,53 +1,70 @@
 class Piece {
+    
+    /** 
+     * A piece is a piece to be cut from stock material.  Each Piece has its own length and quatity required for the order.
+     * @constructor 
+     * @param {number} length - The length of the piece required
+     * @param {number} quantity - The number of pieces required for the order.
+    */
+
     constructor(length, quantity) {
         this.length = length;
         this.quantity = quantity;
     }
 }
 
-let stockLength;
-const piecesOrdered = [];
-const allPossiblePatterns = [];
+const STOCK_LENGTH = parseFloat(document.getElementById("stock-length").value);  /** The length of the stock material the pieces will be cut from. */
+const PIECES_REQUIRED = [];  /** An array of all the required Pieces for the order. */
+const ALL_POSSIBLE_PATTERNS = [];  /** An array of all the possible patterns to cut the pieces required. */
 
 function getBestCuttingSequence() {
-    stockLength = parseFloat(document.getElementById("stock-length").value);
-    getPiecesOrdred();
+    /** Gets the optimal cutting pattern for the user, deteremined by the least amount of wasted material. */
+    getPiecesRequired();
     getAllPossiblePatterns();
-    console.log(allPossiblePatterns);
+    console.log(ALL_POSSIBLE_PATTERNS);
 }
 
-function getPiecesOrdred() {
-    const numPurchaseLines = document.getElementsByTagName("fieldset").length;
+function getPiecesRequired() {
+    const NUM_PURCHASE_LINES = document.getElementsByTagName("fieldset").length;
 
-    for (let purchaseLine = 1; purchaseLine <= numPurchaseLines; purchaseLine++) {
+    for (let purchaseLine = 1; purchaseLine <= NUM_PURCHASE_LINES; purchaseLine++) {
         let length = parseFloat(document.getElementById(`line-${purchaseLine}-length`).value);
         let quantity = parseFloat(document.getElementById(`line-${purchaseLine}-quantity`).value);
-        piecesOrdered.push(new Piece(length, quantity));
+        PIECES_REQUIRED.push(new Piece(length, quantity));
     }
 }
 
 function getAllPossiblePatterns() {
+    /** Gets all of the possible patterns the stock material can be cut into the required pieces.
+     * @constructor
+    */
     let previousPattern;
     let pattern = getFirstPattern();
-    allPossiblePatterns.push(pattern);
+    ALL_POSSIBLE_PATTERNS.push(pattern);
 
     while (anotherPatternPossible(pattern)) {
         previousPattern = pattern;
         pattern = getNextPattern(previousPattern);
-        allPossiblePatterns.push(pattern);
+        ALL_POSSIBLE_PATTERNS.push(pattern);
     }
 }
 
-function getFirstPattern() {
-    let pattern = [];
-    let remainingLength = stockLength;
+/**
+ * @function getFirstPattern
+ * @desc Gets the first pattern when getting all possible patterns
+ * @returns {Piece[]} list of Pieces
+ */
 
-    for (let piece in piecesOrdered) {
-        let quantityNeeded = piecesOrdered[piece].quantity;
-        let maxQuantityPossible = Math.floor(remainingLength / piecesOrdered[piece].length);
+function getFirstPattern() {
+    let pattern = [];  /** Each pattern is an array of Pieces */
+    let remainingLength = STOCK_LENGTH;
+
+    for (let piece in PIECES_REQUIRED) {
+        let quantityNeeded = PIECES_REQUIRED[piece].quantity;
+        let maxQuantityPossible = Math.floor(remainingLength / PIECES_REQUIRED[piece].length);
         let quantity = Math.min(quantityNeeded, maxQuantityPossible);
-        remainingLength -= quantity * piecesOrdered[piece].length;
-        pattern.push(new Piece(piecesOrdered[piece].length, quantity));
+        remainingLength -= quantity * PIECES_REQUIRED[piece].length;
+        pattern.push(new Piece(PIECES_REQUIRED[piece].length, quantity));
     }
     
     pattern.push(remainingLength);
@@ -108,7 +125,7 @@ function useRemainingLength(startIndexAndLoweredPattern) {
             break;
         }
         while (i >= startIndex) {
-            if (loweredPattern[i].length <= remainingLength && loweredPattern[i].quantity < piecesOrdered[i].quantity) {
+            if (loweredPattern[i].length <= remainingLength && loweredPattern[i].quantity < PIECES_REQUIRED[i].quantity) {
                 quantity = Math.floor(remainingLength / loweredPattern[i].length);
                 remainingLength -= loweredPattern[i].length * quantity;
                 nextPattern.push(new Piece(loweredPattern[i].length, quantity));
