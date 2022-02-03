@@ -1,7 +1,7 @@
 /** 
     * A section to be cut from stock material.  Each Piece has its own length and quatity required for the order.
     * @param {Number} length - The length of the piece required
-    * @argument quantity <Number>  - The number of pieces required for the order.
+    * @param {Number} quantity - The number of pieces required for the order.
     */
 class Piece {
     constructor(length, quantity) {
