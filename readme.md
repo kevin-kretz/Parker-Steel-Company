@@ -80,7 +80,7 @@ Typically, the cutting engineers will spend about 30 minutes - 1 hour trying to 
         <td>13 in x 1, 11 in. x 2</td>
     </tr>
      <tr>
-        <th>Bar 4</th>
+        <th>Bar 6</th>
         <td>0</td>
         <td>5</td>
         <td></td>
